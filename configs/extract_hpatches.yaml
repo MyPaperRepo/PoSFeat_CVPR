@@ -1,6 +1,6 @@
-output_root: 'hpatches/mytrain'
-postfix: 'PoSFeat_mytrain'
-load_path: ./ckpts/stage2/001
+output_root: 'hpatches/cvpr_model'
+postfix: 'PoSFeat'
+load_path: ./ckpts/CVPR_model/modules
 
 loss_distance: 'cos'
 output_desc: True

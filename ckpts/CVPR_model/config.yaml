@@ -1,0 +1,79 @@
+DiskLoss_config:
+  bad_reward: -0.25
+  cor_detach: true
+  epipolar_reward: constant_reward
+  good_reward: 1
+  grid_size: 8
+  kp_penalty: -0.001
+  loss_distance: cos
+  match_grad: false
+  reward_config:
+    reward_thr: 2
+  temperature_base: 60
+  temperature_max: 60
+checkpoint_name: stage2
+data_config_train:
+  batch_size: 6
+  data_path: /home/kunbpc/data/kunb/megadepth_caps/train
+  num_pts: 2000
+  prune_kp: false
+  random_percent: 0.5
+  rot_thr: 80
+  workers: 6
+epoch: 1
+epoch_step: 5000
+load_path: ./ckpts/stage1/020
+log_freq: 500
+losses:
+- DiskLoss
+losses_weight:
+- 1
+lr_decay_factor: 0.1
+lr_decay_step: 20
+model_config:
+  align_local_grad: false
+  backbone_config:
+    coarse_out_ch: 128
+    encoder: resnet50
+    fine_out_ch: 128
+    pretrained: true
+  local_input_elements:
+  - local_map
+  - local_map_small
+  local_with_img: true
+  localheader_config:
+    act: Softplus
+    in_channels: 192
+no_cuda:
+- name1
+- name2
+optimal_lrs:
+- 0.001
+optimal_modules:
+- localheader
+preprocess_train_config:
+  kps_generator_config:
+    grid_size: 16
+    keep_spatial: true
+    random_select: regular_random
+  line_search_config:
+    line_step: 100
+    loc_rand: true
+    use_nn: true
+  loss_distance: cos
+  temperature_base: 60
+  temperature_max: 60
+  window_size: 0.1
+preprocess_val_config:
+  kps_generator_config:
+    grid_size: 20
+    keep_spatial: false
+    random_select: random
+  matcher_config:
+    iters: 20
+  temperature_base: 60
+  temperature_max: 100
+skip_preprocess: true
+tb_component:
+- loss_w1
+- loss_w2

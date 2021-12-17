@@ -11,7 +11,7 @@ use_cuda = torch.cuda.is_available()
 device = torch.device('cuda:0' if use_cuda else 'cpu')
 # device = torch.device('cpu')
 
-methods = ['hesaff', 'hesaffnet', 'contextdesc', 'd2-net', 'r2d2', 'aslfeat', 'disk-d-8k-official', 'delf-new', 'superpoint', 'caps', 'disk-epipolar', 'PoSFeat_mytrain_local']
+methods = ['hesaff', 'hesaffnet', 'contextdesc', 'd2-net', 'r2d2', 'aslfeat', 'disk-d-8k-official', 'delf-new', 'superpoint', 'caps', 'disk-epipolar', 'PoSFeat_local']
 names = ['Hes. Aff. + Root-SIFT', 'HAN + HN++', 'SIFT + ContextDesc', 'D2-Net', 'R2D2', 'ASLFeat', 'DISK', 'DELF', 'SuperPoint', 'SIFT + CAPS', 'DISK-W', 'Ours']
 colors = ['tan', 'orange', 'peru', 'skyblue', 'purple', 'tomato', 'yellowgreen', 'gray', 'darkcyan', 'slateblue', 'yellowgreen', 'red']
 linestyles = ['--','--','--','--','--','--','--','-', '-', '-', '-', '-']
@@ -20,7 +20,7 @@ top_k = None
 n_i = 52
 n_v = 56
 dataset_path = Path('/data/kunb/hpatches/hpatches-sequences-release')
-features_path = Path('../../ckpts/hpatches/mytrain/desc')
+features_path = Path('../../ckpts/hpatches/cvpr_model/desc')
 
 
 lim = [1, 15]
