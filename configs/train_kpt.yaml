@@ -1,0 +1,75 @@
+checkpoint_name: 'stage2'
+epoch: 1
+epoch_step: 5000
+log_freq: 500 # this is used to visualize  when there is inputs_vis
+load_path: ./ckpts/stage1/020
+
+optimal_modules: ['localheader']
+optimal_lrs: [1.e-3]
+lr_decay_step: 20
+lr_decay_factor: 0.1
+
+model_config: 
+  backbone_config:
+      encoder: 'resnet50'
+      pretrained: True
+      coarse_out_ch: 128
+      fine_out_ch: 128
+  localheader_config:
+      in_channels: 192 # 128 for localmap 64 for localmap_small
+      act: 'Softplus'
+  align_local_grad: False
+  local_input_elements: ['local_map', 'local_map_small']
+  local_with_img: True
+no_cuda: ['name1', 'name2']
+
+data_config_train:
+  data_path: '/home/kunbpc/data/kunb/megadepth_caps/train'
+  prune_kp: False
+  num_pts: 2000
+  batch_size: 6
+  workers: 6
+  random_percent: 0.5
+  rot_thr: 80
+
+skip_preprocess: True
+preprocess_train_config:
+  kps_generator_config:
+    grid_size: 16 # the grid size on fine feature map
+    keep_spatial: True
+    random_select: 'regular_random'
+  window_size: 0.1
+  loss_distance: 'cos'
+  line_search_config:
+    line_step: 100
+    use_nn: True
+    loc_rand: True
+  temperature_base: 60
+  temperature_max: 60
+preprocess_val_config:
+  kps_generator_config:
+    grid_size: 20 # the grid size on fine feature map
+    keep_spatial: False
+    random_select: 'random'
+  matcher_config:
+    iters: 20
+  temperature_base: 60
+  temperature_max: 100
+
+losses: ['DiskLoss']
+losses_weight: [1]
+DiskLoss_config:
+  grid_size: 8
+  loss_distance: 'cos'
+  temperature_base: 60
+  temperature_max: 60
+  epipolar_reward: constant_reward
+  reward_config:
+    reward_thr: 2
+  good_reward: 1
+  bad_reward: -0.25
+  kp_penalty: -0.001
+  cor_detach: True
+  match_grad: False
+
+tb_component: ['loss_w1', 'loss_w2']

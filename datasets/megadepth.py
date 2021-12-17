@@ -12,6 +12,7 @@ import datasets.data_utils as data_utils
 
 __all__ = ['MegaDepth']
 
+rand = np.random.RandomState(234)
 class MegaDepth(Dataset):
     def __init__(self, configs, is_train=True):
         super(MegaDepth, self).__init__()
@@ -72,13 +73,13 @@ class MegaDepth(Dataset):
                             T = np.array(elems[16:19])
                             if self.is_train:
                                 # label = self.data_dict[scene_id.name]
-                                label = None
+                                label = 0
                                 images[img_path] = Image(
                                     name=image_name, w=w, h=h, fx=fx, fy=fy, cx=cx, cy=cy, rvec=R, tvec=T, class_label=label
                                 )
                             else:
                                 images[img_path] = Image(
-                                    name=image_name, w=w, h=h, fx=fx, fy=fy, cx=cx, cy=cy, rvec=R, tvec=T, class_label=None
+                                    name=image_name, w=w, h=h, fx=fx, fy=fy, cx=cx, cy=cy, rvec=R, tvec=T, class_label=0
                                 )
         return images 
 
